@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Hello</title>
   <style>
     body {
@@ -10,25 +11,71 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background: #111;
+      overflow: hidden;
+      background: #0a0a0f;
+      animation: bgPulse 8s ease-in-out infinite;
+    }
+
+    @keyframes bgPulse {
+      0%, 100% { background: radial-gradient(ellipse at 50% 50%, #1a0a2e 0%, #0a0a0f 70%); }
+      50%       { background: radial-gradient(ellipse at 50% 50%, #0d1a2e 0%, #0a0a0f 70%); }
     }
 
     h1 {
       font-family: 'Segoe UI', sans-serif;
-      font-size: 12rem;
+      font-size: clamp(4rem, 15vw, 12rem);
       font-weight: 900;
+      letter-spacing: 0.15em;
+      -webkit-font-smoothing: antialiased;
       background: linear-gradient(90deg, #ff0080, #ff8c00, #ffe000, #00e676, #00b0ff, #d500f9);
       background-size: 300% 300%;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-      animation: shift 3s ease infinite;
+      animation: shift 3s ease infinite, fadeIn 1s ease-out both;
+      will-change: background-position;
+      text-shadow: none;
+      filter: drop-shadow(0 0 20px rgba(255, 0, 128, 0.4))
+              drop-shadow(0 0 40px rgba(0, 176, 255, 0.3))
+              drop-shadow(0 0 80px rgba(213, 0, 249, 0.2));
+      cursor: default;
+      transition: transform 0.3s ease, filter 0.3s ease;
+    }
+
+    h1:hover {
+      animation: fadeIn 1s ease-out both;
+      transform: scale(1.05);
+      filter: drop-shadow(0 0 30px rgba(255, 0, 128, 0.7))
+              drop-shadow(0 0 60px rgba(0, 176, 255, 0.5))
+              drop-shadow(0 0 100px rgba(213, 0, 249, 0.4));
     }
 
     @keyframes shift {
       0%   { background-position: 0% 50%; }
       50%  { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: scale(0.85);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      body { animation: none; }
+      h1 {
+        animation: none;
+        background-position: 0% 50%;
+        transform: none;
+        transition: none;
+      }
+      h1:hover { transform: none; }
     }
   </style>
 </head>
